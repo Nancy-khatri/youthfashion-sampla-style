@@ -1,0 +1,3 @@
+import { z } from 'zod';
+export const checkoutSchema=z.object({name:z.string().trim().min(2,'Enter your full name.'),mobile:z.string().regex(/^[6-9]\d{9}$/,'Enter a valid 10-digit Indian mobile number.'),email:z.union([z.literal(''),z.string().email('Enter a valid email address.')]),address:z.string().trim().min(5,'Enter your full address.'),city:z.string().trim().min(2,'Enter your city.'),state:z.string().trim().min(2,'Enter your state.'),pin:z.string().regex(/^[1-9]\d{5}$/,'Enter a valid 6-digit PIN code.')});
+export const clampQuantity=(quantity:number,stock:number)=>Math.max(1,Math.min(stock,Math.floor(quantity)));
