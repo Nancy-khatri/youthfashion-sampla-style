@@ -6,7 +6,7 @@ import track from '@/assets/track.jpg';
 import shoes from '@/assets/shoes.jpg';
 import belt from '@/assets/belt.jpg';
 export const storeConfig = { name: 'YOUTH FASHION SAMPla', instagram: 'https://www.instagram.com/youthfashion_sampla/', whatsappNumber: '', mapsUrl: 'https://www.google.com/maps/search/?api=1&query=Beri+Mod+Sampla+Haryana+124501', address: 'Beri Mod, Sampla, Haryana – 124501, India' };
-export interface Product { id: string; name: string; description: string; category: string; price: number; discountPrice?: number; images: string[]; colors: string[]; sizes: string[]; stock: number; sku: string; tags: string[]; brand: string; isDemo: boolean; createdAt: string }
+export interface Product { id: string; name: string; description: string; category: string; price: number; discountPrice?: number | undefined; images: string[]; colors: string[]; sizes: string[]; stock: number; sku: string; tags: string[]; brand: string; isDemo: boolean; createdAt: string }
 export const categories = [{name:'T-Shirts',image:tshirt},{name:'Shirts',image:shirt},{name:'Jeans & Trousers',image:jeans},{name:'Lower / Track Pants',image:track},{name:'Shoes',image:shoes},{name:'Belts',image:belt}];
 // Development-only catalog. Replace this repository with a database adapter before taking live orders.
 export const demoProducts: Product[] = [
@@ -21,7 +21,7 @@ export const demoProducts: Product[] = [
 export const productRepository = { list: () => demoProducts, get: (id:string) => demoProducts.find(p=>p.id===id) };
 export const priceOf = (p:Product) => p.discountPrice ?? p.price;
 export const money = (n:number) => '₹' + n.toLocaleString('en-IN');
-export interface Filters { query?:string; category?:string; maxPrice?:number; size?:string; color?:string; brand?:string; availability?:string; style?:string; sort?:string }
+export interface Filters { query?:string | undefined; category?:string | undefined; maxPrice?:number | undefined; size?:string | undefined; color?:string | undefined; brand?:string | undefined; availability?:string | undefined; style?:string | undefined; sort?:string | undefined }
 export function filterProducts(products:Product[],f:Filters) { return products.filter(p=>(!f.query || `${p.name} ${p.category} ${p.tags.join(' ')}`.toLowerCase().includes(f.query.toLowerCase())) && (!f.category || p.category===f.category) && (!f.maxPrice || priceOf(p)<=f.maxPrice) && (!f.size || p.sizes.includes(f.size)) && (!f.color || p.colors.includes(f.color)) && (!f.brand || p.brand===f.brand) && (!f.availability || (f.availability==='in' ? p.stock>0:p.stock===0)) && (!f.style || p.tags.includes(f.style))).sort((a,b)=>f.sort==='low'?priceOf(a)-priceOf(b):f.sort==='high'?priceOf(b)-priceOf(a):b.createdAt.localeCompare(a.createdAt)); }
 export interface CartLine { productId:string; size:string; color:string; quantity:number }
 export const lineKey = (l:CartLine) => `${l.productId}:${l.size}:${l.color}`;
