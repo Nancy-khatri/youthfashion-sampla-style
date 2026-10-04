@@ -1,7 +1,7 @@
 import { Link } from '@tanstack/react-router';
 import { ArrowUpRight, ArrowRight, ArrowDown, Truck, MessageCircle, Shirt, MapPin, Instagram } from 'lucide-react';
 import { Button } from '@/components/ui/button';
-import { categories, storeConfig } from '@/lib/store/catalog';
+import { categories, storeConfig, visible } from '@/lib/store/catalog';
 import { useStore } from '@/lib/store/state';
 import { ProductGrid } from './products';
 import { WhatsApp, WhatsAppBand } from './shell';

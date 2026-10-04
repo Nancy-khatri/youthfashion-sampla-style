@@ -16,3 +16,4 @@
 - Keep business contact destinations in one store configuration; a missing WhatsApp number must show an honest Instagram fallback, not a fabricated link.
 - Checkout and admin are frontend previews only; production payments, authenticated roles, inventory and order persistence require server-verified integrations.
 - The runtime remains TanStack Start; future database, Cloudinary, Razorpay and WhatsApp adapters must use server functions without exposing private keys.
+- Product types, categories, demo rows, config and repository live in separate src/lib/store modules re-exported by catalog.ts; customer views only show active products via visible()/filterProducts.
