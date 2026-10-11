@@ -14,6 +14,325 @@ export type Database = {
   }
   public: {
     Tables: {
+      addresses: {
+        Row: {
+          city: string
+          created_at: string
+          full_name: string
+          house: string
+          id: string
+          instructions: string | null
+          is_default: boolean
+          lat: number | null
+          lng: number | null
+          phone: string
+          pin: string
+          state: string
+          street: string
+          user_id: string
+        }
+        Insert: {
+          city: string
+          created_at?: string
+          full_name: string
+          house: string
+          id?: string
+          instructions?: string | null
+          is_default?: boolean
+          lat?: number | null
+          lng?: number | null
+          phone: string
+          pin: string
+          state: string
+          street: string
+          user_id: string
+        }
+        Update: {
+          city?: string
+          created_at?: string
+          full_name?: string
+          house?: string
+          id?: string
+          instructions?: string | null
+          is_default?: boolean
+          lat?: number | null
+          lng?: number | null
+          phone?: string
+          pin?: string
+          state?: string
+          street?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      categories: {
+        Row: {
+          created_at: string
+          id: string
+          image_url: string | null
+          name: string
+          sort_order: number
+        }
+        Insert: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name: string
+          sort_order?: number
+        }
+        Update: {
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          name?: string
+          sort_order?: number
+        }
+        Relationships: []
+      }
+      order_items: {
+        Row: {
+          color: string
+          id: string
+          image: string | null
+          name: string
+          order_id: string
+          original_price: number
+          product_id: string | null
+          quantity: number
+          size: string
+          sku: string | null
+          unit_price: number
+          variant_id: string | null
+        }
+        Insert: {
+          color: string
+          id?: string
+          image?: string | null
+          name: string
+          order_id: string
+          original_price: number
+          product_id?: string | null
+          quantity: number
+          size: string
+          sku?: string | null
+          unit_price: number
+          variant_id?: string | null
+        }
+        Update: {
+          color?: string
+          id?: string
+          image?: string | null
+          name?: string
+          order_id?: string
+          original_price?: number
+          product_id?: string | null
+          quantity?: number
+          size?: string
+          sku?: string | null
+          unit_price?: number
+          variant_id?: string | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "order_items_order_id_fkey"
+            columns: ["order_id"]
+            isOneToOne: false
+            referencedRelation: "orders"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      orders: {
+        Row: {
+          address: Json
+          created_at: string
+          customer_email: string | null
+          customer_name: string
+          customer_phone: string
+          discount_total: number
+          id: string
+          lat: number | null
+          lng: number | null
+          note: string | null
+          order_number: number
+          paid_at: string | null
+          payment_status: Database["public"]["Enums"]["payment_status"]
+          razorpay_order_id: string | null
+          razorpay_payment_id: string | null
+          status: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total: number
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          address: Json
+          created_at?: string
+          customer_email?: string | null
+          customer_name: string
+          customer_phone: string
+          discount_total?: number
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          note?: string | null
+          order_number?: never
+          paid_at?: string | null
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal: number
+          total: number
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          address?: Json
+          created_at?: string
+          customer_email?: string | null
+          customer_name?: string
+          customer_phone?: string
+          discount_total?: number
+          id?: string
+          lat?: number | null
+          lng?: number | null
+          note?: string | null
+          order_number?: never
+          paid_at?: string | null
+          payment_status?: Database["public"]["Enums"]["payment_status"]
+          razorpay_order_id?: string | null
+          razorpay_payment_id?: string | null
+          status?: Database["public"]["Enums"]["order_status"]
+          subtotal?: number
+          total?: number
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      payment_events: {
+        Row: {
+          created_at: string
+          event_id: string
+          event_type: string
+          id: string
+          payload: Json
+          razorpay_order_id: string | null
+        }
+        Insert: {
+          created_at?: string
+          event_id: string
+          event_type: string
+          id?: string
+          payload: Json
+          razorpay_order_id?: string | null
+        }
+        Update: {
+          created_at?: string
+          event_id?: string
+          event_type?: string
+          id?: string
+          payload?: Json
+          razorpay_order_id?: string | null
+        }
+        Relationships: []
+      }
+      product_variants: {
+        Row: {
+          color: string
+          created_at: string
+          id: string
+          product_id: string
+          size: string
+          sku: string
+          stock: number
+        }
+        Insert: {
+          color: string
+          created_at?: string
+          id?: string
+          product_id: string
+          size: string
+          sku: string
+          stock?: number
+        }
+        Update: {
+          color?: string
+          created_at?: string
+          id?: string
+          product_id?: string
+          size?: string
+          sku?: string
+          stock?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "product_variants_product_id_fkey"
+            columns: ["product_id"]
+            isOneToOne: false
+            referencedRelation: "products"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      products: {
+        Row: {
+          active: boolean
+          brand: string
+          category: string
+          created_at: string
+          description: string
+          discount_price: number | null
+          featured: boolean
+          id: string
+          images: string[]
+          low_stock_threshold: number
+          name: string
+          new_arrival: boolean
+          price: number
+          subcategory: string | null
+          tags: string[]
+          updated_at: string
+        }
+        Insert: {
+          active?: boolean
+          brand?: string
+          category: string
+          created_at?: string
+          description?: string
+          discount_price?: number | null
+          featured?: boolean
+          id?: string
+          images?: string[]
+          low_stock_threshold?: number
+          name: string
+          new_arrival?: boolean
+          price: number
+          subcategory?: string | null
+          tags?: string[]
+          updated_at?: string
+        }
+        Update: {
+          active?: boolean
+          brand?: string
+          category?: string
+          created_at?: string
+          description?: string
+          discount_price?: number | null
+          featured?: boolean
+          id?: string
+          images?: string[]
+          low_stock_threshold?: number
+          name?: string
+          new_arrival?: boolean
+          price?: number
+          subcategory?: string | null
+          tags?: string[]
+          updated_at?: string
+        }
+        Relationships: []
+      }
       profiles: {
         Row: {
           created_at: string
@@ -65,6 +384,10 @@ export type Database = {
     }
     Functions: {
       claim_store_owner: { Args: never; Returns: boolean }
+      finalize_paid_order: {
+        Args: { _order_id: string; _payment_id: string }
+        Returns: string
+      }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
@@ -77,6 +400,16 @@ export type Database = {
     }
     Enums: {
       app_role: "owner" | "staff" | "customer"
+      order_status:
+        | "pending_payment"
+        | "paid"
+        | "processing"
+        | "shipped"
+        | "delivered"
+        | "cancelled"
+        | "payment_failed"
+        | "needs_attention"
+      payment_status: "created" | "paid" | "failed"
     }
     CompositeTypes: {
       [_ in never]: never
@@ -205,6 +538,17 @@ export const Constants = {
   public: {
     Enums: {
       app_role: ["owner", "staff", "customer"],
+      order_status: [
+        "pending_payment",
+        "paid",
+        "processing",
+        "shipped",
+        "delivered",
+        "cancelled",
+        "payment_failed",
+        "needs_attention",
+      ],
+      payment_status: ["created", "paid", "failed"],
     },
   },
 } as const
