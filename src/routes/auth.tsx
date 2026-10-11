@@ -9,7 +9,7 @@ import { seo } from '@/lib/store/catalog';
 import { safeRedirect } from '@/lib/auth';
 
 export const Route = createFileRoute('/auth')({
-  validateSearch: (s: Record<string, unknown>) => ({ redirect: typeof s.redirect === 'string' ? s.redirect : undefined }),
+  validateSearch: (s: Record<string, unknown>) : { redirect?: string } => ({ redirect: typeof s['redirect'] === 'string' ? s['redirect'] : undefined }),
   head: () => {
     const h = seo('Sign In or Create Account | Youth Fashion Sampla', 'Sign in to your Youth Fashion Sampla account to manage your profile and orders.');
     return { meta: [...h.meta, { name: 'robots', content: 'noindex' }] };
