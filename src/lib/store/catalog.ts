@@ -1,12 +1,9 @@
-import { demoProducts } from './demo-products';
 import { NEW_ARRIVALS } from './categories';
 import type { CartLine, Filters, Product } from './types';
-export type { Product, Filters, CartLine, Category } from './types';
+export type { Product, Filters, CartLine, Category, Variant } from './types';
 export { storeConfig, productEnquiry } from './config';
 export { categories, newArrivalsCategory, NEW_ARRIVALS } from './categories';
-export { demoProducts };
-// Single product source. Swap list/get for a database adapter (server function) later.
-export const productRepository = { list: () => demoProducts, get: (id: string) => demoProducts.find(p => p.id === id) };
+export { fetchProducts, variantOf, stockStatus } from './repository';
 export const visible = (products: Product[]) => products.filter(p => p.active);
 export const priceOf = (p: Product) => p.discountPrice ?? p.price;
 export const money = (n: number) => '₹' + n.toLocaleString('en-IN');

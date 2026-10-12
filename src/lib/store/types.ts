@@ -1,4 +1,5 @@
-// Product shape shared by the storefront, admin and future database adapter.
+// Product shape shared by the storefront, admin and database adapter.
+export interface Variant { id: string; size: string; color: string; sku: string; stock: number }
 export interface Product {
   id: string;
   name: string;
@@ -20,6 +21,8 @@ export interface Product {
   tags: string[];
   brand: string;
   isDemo: boolean;
+  variants: Variant[];
+  lowStockThreshold: number;
 }
 export interface Category { name: string; image: string; virtual?: boolean }
 export interface Filters { query?: string | undefined; category?: string | undefined; maxPrice?: number | undefined; size?: string | undefined; color?: string | undefined; brand?: string | undefined; availability?: string | undefined; style?: string | undefined; sort?: string | undefined; newArrival?: boolean | undefined }
