@@ -25,6 +25,7 @@ import { Route as WishlistRouteImport } from './routes/wishlist'
 import { Route as AuthenticatedAccountRouteImport } from './routes/_authenticated/account'
 import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as AuthenticatedCheckoutRouteImport } from './routes/_authenticated/checkout'
+import { Route as AuthenticatedOrdersRouteImport } from './routes/_authenticated/orders'
 import { Route as ProductProductIdRouteImport } from './routes/product.$productId'
 import { Route as ApiPublicRazorpayWebhookRouteImport } from './routes/api/public/razorpay-webhook'
 import { Route as ApiPublicSitemapDotxmlRouteImport } from './routes/api/public/sitemap[.]xml'
@@ -108,6 +109,11 @@ const AuthenticatedCheckoutRoute = AuthenticatedCheckoutRouteImport.update({
   path: '/checkout',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedOrdersRoute = AuthenticatedOrdersRouteImport.update({
+  id: '/orders',
+  path: '/orders',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ProductProductIdRoute = ProductProductIdRouteImport.update({
   id: '/product/$productId',
   path: '/product/$productId',
@@ -141,6 +147,7 @@ export interface FileRoutesByFullPath {
   '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/checkout': typeof AuthenticatedCheckoutRoute
+  '/orders': typeof AuthenticatedOrdersRoute
   '/product/$productId': typeof ProductProductIdRoute
   '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
   '/api/public/sitemap.xml': typeof ApiPublicSitemapDotxmlRoute
@@ -161,6 +168,7 @@ export interface FileRoutesByTo {
   '/account': typeof AuthenticatedAccountRoute
   '/admin': typeof AuthenticatedAdminRoute
   '/checkout': typeof AuthenticatedCheckoutRoute
+  '/orders': typeof AuthenticatedOrdersRoute
   '/product/$productId': typeof ProductProductIdRoute
   '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
   '/api/public/sitemap.xml': typeof ApiPublicSitemapDotxmlRoute
@@ -183,6 +191,7 @@ export interface FileRoutesById {
   '/_authenticated/account': typeof AuthenticatedAccountRoute
   '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/checkout': typeof AuthenticatedCheckoutRoute
+  '/_authenticated/orders': typeof AuthenticatedOrdersRoute
   '/product/$productId': typeof ProductProductIdRoute
   '/api/public/razorpay-webhook': typeof ApiPublicRazorpayWebhookRoute
   '/api/public/sitemap.xml': typeof ApiPublicSitemapDotxmlRoute
@@ -205,6 +214,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/checkout'
+    | '/orders'
     | '/product/$productId'
     | '/api/public/razorpay-webhook'
     | '/api/public/sitemap.xml'
@@ -225,6 +235,7 @@ export interface FileRouteTypes {
     | '/account'
     | '/admin'
     | '/checkout'
+    | '/orders'
     | '/product/$productId'
     | '/api/public/razorpay-webhook'
     | '/api/public/sitemap.xml'
@@ -246,6 +257,7 @@ export interface FileRouteTypes {
     | '/_authenticated/account'
     | '/_authenticated/admin'
     | '/_authenticated/checkout'
+    | '/_authenticated/orders'
     | '/product/$productId'
     | '/api/public/razorpay-webhook'
     | '/api/public/sitemap.xml'
@@ -384,6 +396,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedCheckoutRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/orders': {
+      id: '/_authenticated/orders'
+      path: '/orders'
+      fullPath: '/orders'
+      preLoaderRoute: typeof AuthenticatedOrdersRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/product/$productId': {
       id: '/product/$productId'
       path: '/product/$productId'
@@ -412,12 +431,14 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedAccountRoute: typeof AuthenticatedAccountRoute
   AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedCheckoutRoute: typeof AuthenticatedCheckoutRoute
+  AuthenticatedOrdersRoute: typeof AuthenticatedOrdersRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAccountRoute: AuthenticatedAccountRoute,
   AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedCheckoutRoute: AuthenticatedCheckoutRoute,
+  AuthenticatedOrdersRoute: AuthenticatedOrdersRoute,
 }
 
 const AuthenticatedRouteRouteWithChildren =
