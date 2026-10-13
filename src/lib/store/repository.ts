@@ -20,11 +20,24 @@ export function mapProduct(r: Row): Product {
   };
 }
 
+export const IMAGE_BUCKET = 'product-images';
+const isStoragePath = (s: string) => !!s && !/^(https?:|data:|blob:|\/)/.test(s);
+
+/** Photos live in private storage; turn stored paths into week-long signed links. */
+export async function signImages(paths: string[]): Promise<Record<string, string>> {
+  const keys = [...new Set(paths.filter(isStoragePath))];
+  if (!keys.length) return {};
+  const { data } = await supabase.storage.from(IMAGE_BUCKET).createSignedUrls(keys, 60 * 60 * 24 * 7);
+  return Object.fromEntries((data ?? []).filter(d => d.signedUrl && d.path).map(d => [d.path as string, d.signedUrl]));
+}
+
 // Customers see active products only (enforced by database policy); staff also see hidden ones.
 export async function fetchProducts(): Promise<Product[]> {
   const { data, error } = await supabase.from('products').select('*, product_variants(id,size,color,sku,stock)').order('created_at', { ascending: false });
   if (error) throw error;
-  return (data as unknown as Row[]).map(mapProduct);
+  const rows = data as unknown as Row[];
+  const signed = await signImages(rows.flatMap(r => r.images ?? []));
+  return rows.map(r => ({ ...mapProduct(r), imagePaths: r.images ?? [], images: (r.images ?? []).map(i => signed[i] ?? i).filter(i => !isStoragePath(i)) }));
 }
 
 export async function fetchCategoryNames(): Promise<string[]> {
