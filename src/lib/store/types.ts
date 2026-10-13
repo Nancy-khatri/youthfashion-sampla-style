@@ -9,6 +9,8 @@ export interface Product {
   price: number;
   discountPrice?: number | undefined;
   images: string[];
+  /** Raw stored photo paths (admin editing); `images` holds display links. */
+  imagePaths?: string[] | undefined;
   sizes: string[];
   colors: string[];
   stock: number;
